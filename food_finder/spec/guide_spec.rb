@@ -17,9 +17,8 @@ describe Guide do
   describe '#intialize' do
     
     it 'calls Restaurant#load_file with its path argument' do
-      skip('Needs expectation')
+      expect(Restaurant).to receive(:load_file).with(test_file)
       Guide.new(test_file)
-      # expect ...
     end
     
   end
@@ -27,9 +26,9 @@ describe Guide do
   describe '#launch!' do
     
     it 'outputs a introductory message' do
-      skip('Needs expectation')
       setup_fake_input('quit')
-      # expect ...
+      output = capture_output { subject.launch! }
+      expect(output).to match(/Welcome/)
     end
     
   end
@@ -39,9 +38,10 @@ describe Guide do
     context 'with invalid action' do
       
       it 'outputs list of valid actions' do
-        skip('Needs expectation')
+        # skip('Needs expectation')
         setup_fake_input('invalid action', 'quit')
-        # expect ...
+        output = capture_output { subject.launch! }.split("\n")
+        expect(output[6]).to include('list', 'find', 'add', 'quit')
       end
       
     end
